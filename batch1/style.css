@@ -1,0 +1,39 @@
+body{
+
+}
+/* h1{
+    position: absolute;
+    color: blue;
+} */
+
+#box{
+    background: blue;
+}
+
+.heading{
+    color: red;
+}
+
+#outer p{
+    font-size: 25px;
+}
+#inner p{
+    font-size: 10px;
+}
+
+#circle{
+    background:rgba(255, 0,0,0.1);
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.position{
+    background-image: url('./images/profileimg.jpeg');
+    background-size: cover;
+    height: 100vh;
+    
+}
+/* .second{
+    height: 100vh;
+} */

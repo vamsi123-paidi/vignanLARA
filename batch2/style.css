@@ -1,0 +1,33 @@
+*{
+    background: aqua;
+}
+
+#box{
+    background-color: blue;
+}
+
+.heading{
+    color: red;
+}
+
+/* h4{
+    color: aqua ;
+} */
+
+#submitbutton{
+    background-color: pink;
+}
+
+#outer p{
+    font-size: 25px;
+}
+#inner p{
+    font-size: 10px;
+}
+
+#circle{
+    height: 500px;
+    width: 500px;
+    background:rgba(89, 0, 255,1);
+    border-radius: 50%;
+}
