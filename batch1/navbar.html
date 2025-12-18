@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main{
+            display: flex;
+            background: aqua;
+            flex-direction: row;
+        }
+        #title{
+            font-size: 25px;
+            font-weight: 500;
+            font-family: 'Times New Roman', Times, serif;
+            color: chocolate;
+        }
+        .list{
+            margin-left: 350px;
+        }
+        .list ul{
+            display: flex;
+            flex-direction: row;
+        }
+        .list ul li{
+            list-style: none;
+            font-size: 20px;
+            color: rgb(23, 23, 22);
+            cursor: pointer;
+            margin: 20px;
+
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div id="main">
+            <div id="title">
+                <h4>NavTitle</h4>
+            </div>
+            <div class="list">
+                <ul>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Skills</li>
+                    <li>Projects</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: black;
+    color: white;
+}
+
+header{
+    margin-top: 100px;
+}
+
+section{
+    margin-top: 100px;
+    height: 100vh;
+}

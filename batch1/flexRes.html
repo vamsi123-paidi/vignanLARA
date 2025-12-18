@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main{
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .box{
+            background: aqua;
+            height: 200px;
+            width: 200px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width:576px) {
+            #main{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="box">box</div>
+        <div class="box">box</div>
+        <div class="box">box</div>
+        <div class="box">box</div>
+    </div>
+</body>
+</html>

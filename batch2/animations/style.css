@@ -25,7 +25,7 @@ body {
     margin-bottom: 30px;
   }
   
-  .flex-item {
+ .flex-item {
     width: 150px;
     height: 150px;
     background-color: #3498db;
@@ -37,7 +37,7 @@ body {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 8px rgb(7, 7, 7);
-    transition: background-color 5s;
+    transition: background-color 2s;
   }
   
   .flex-item:hover {
@@ -57,7 +57,7 @@ body {
   }
   
   .slideExpandUp {
-    animation: slideExpandUp 1.5s ease-out;
+    animation: slideExpandUp 5s ease-out;
   }
   
   .fadeIn {
@@ -65,10 +65,9 @@ body {
   }
   
   .bigEntrance {
-    animation: bigEntrance 1.5s ease-out;
+    animation: bigEntrance 5s ease-out;
   }
   
-  /* Hover Animations */
   .pulse:hover {
     animation: pulse 1.5s ease-in-out infinite;
   }
@@ -113,7 +112,6 @@ body {
     animation: light 1.5s ease-in-out infinite alternate;
   }
   
-  /* Keyframes for Entrance Animations */
   @keyframes slideDown {
     from { transform: translateY(-100px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
@@ -144,13 +142,12 @@ body {
     0% { transform: scale(0.3) rotate(180deg) translateX(-30%) translateY(30%); opacity: 0.2; }
     30% { transform: scale(1.03) rotate(-100deg) translateX(2%) translateY(-2%); opacity: 1; }
     45% { transform: scale(0.98) rotate(100deg) translateX(0) translateY(0); opacity: 1; }
-    60% { transform: scale(1.01) rotate(-1deg) translateX(0) translateY(0); opacity: 1; }
-    75% { transform: scale(0.99) rotate(1deg) translateX(0) translateY(0); opacity: 1; }
+    60% { transform: scale(1.01) rotate(-50deg) translateX(0) translateY(0); opacity: 1; }
+    75% { transform: scale(0.99) rotate(50deg) translateX(0) translateY(0); opacity: 1; }
     90% { transform: scale(1.01) rotate(0) translateX(0) translateY(0); opacity: 1; }
     100% { transform: scale(1) rotate(0) translateX(0) translateY(0); opacity: 1; }
   }
   
-  /* Keyframes for Hover Animations */
   @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.1); }
@@ -199,5 +196,5 @@ body {
   
   @keyframes light {
     from { box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
-    to { box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
-  }
+    to { box-shadow: 0 0 10px #fff, 0 0 200px #fff, 0 0 300px #0073e6, 0 0 40px #0073e6; }
+  } 
