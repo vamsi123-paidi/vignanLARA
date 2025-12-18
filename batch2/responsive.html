@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            font-size: 50px;
+            background: aqua;
+            color: white;
+
+        }
+        @media (max-width:1200px) {
+            h1{
+                font-size: 40px;
+                background: black;
+                color: white;
+            }
+            
+        }
+        @media (max-width:992px) {
+            h1{
+                font-size: 30px;
+                background: rgba(77, 246, 21, 0.665);
+                color: rgb(131, 115, 115);
+            }
+            
+        }
+        @media (max-width:768px) {
+            h1{
+                font-size: 20px;
+                background: rgb(11, 175, 240);
+                color: rgb(237, 6, 6);
+            }
+            
+        }
+        @media (max-width:576px) {
+            h1{
+                font-size: 10px;
+                background: rgb(232, 50, 5);
+                color: rgb(16, 234, 78);
+            }
+            
+        }
+        #box{
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+
+        .box1{
+            height: 100px;
+            width: 100px;
+            background-color: aqua;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width:768px) {
+            #box{
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>this is showing the responsiveness</h1>
+    <div id="box">
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+    </div>
+</body>
+</html>
