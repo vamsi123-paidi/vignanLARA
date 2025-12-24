@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .box1{
+            height: 100px;
+            width: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: aqua;
+            border: 2px solid black;
+            flex-direction: row;
+        }
+
+        #boxes{
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(2,1fr);
+
+        }
+
+        .box2{
+            height: 100px;
+            width: 100px;
+            background: aqua;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+        <div class="box1">box</div>
+    </div> 
+    <div id="boxes">
+        <div class="box2">box</div>
+        <div class="box2">box</div>
+        <div class="box2">box</div>
+        <div class="box2">box</div>
+    </div>
+</body>
+</html>
