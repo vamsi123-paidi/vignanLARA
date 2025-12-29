@@ -121,6 +121,7 @@ function step3() {
 }
 function step4() {
   console.log("4th step done");
+  setTimeout(step1, 1000);
 }
 console.log("Start");
 setTimeout(step1, 1000);
