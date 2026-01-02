@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <input type="number" id="userInput">
+        <button onclick="callerFun()">fetch User</button>
+        <button onclick="randomUserFun()">Random User</button>
+
+    </div>
+    <div id="output"></div>
+    <script>
+        const fetchData = async(userInput)=>{
+            const output = document.getElementById("output")
+            console.log(userInput)
+            const res = await fetch(`https://jsonplaceholder.typicode.com/users/${userInput}`)
+            if(!res.ok){
+                alert("failed to fetch")
+            }
+            const data = await res.json()
+            output.innerHTML = `
+                <h1>${data.name}</h1>
+                <h4>${data.email}</h4>
+            `
+        }
+        const callerFun = ()=>{
+            const userInput = document.getElementById("userInput").value;
+            if(!userInput){
+                alert("enter user id")
+            }
+            fetchData(userInput)
+        }
+
+        const randomUserFun = ()=>{
+            const userInput = document.getElementById("userInput");
+            const randomInput = Math.round(Math.random()*10)+1;
+            userInput.value = randomInput
+
+            console.log(randomInput)
+            fetchData(randomInput)
+        }
+
+    </script>
+</body>
+</html>
