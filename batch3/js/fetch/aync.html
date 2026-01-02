@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 200px;
+            width: 200px;
+            border: 2px solid black;
+            border-radius: 8px;
+            background: darkblue;
+            color: lightgray;
+        }
+    </style>
+</head>
+<body>
+    <div id="name"></div>
+    <script>
+        const fetchData = async ()=>{
+            const name = document.getElementById("name")
+            const res = await fetch("https://jsonplaceholder.typicode.com/users/1")
+            const data =await res.json();
+            console.log(data)
+            console.log(data.name)
+            name.innerHTML = `${data.name}`
+        }
+        fetchData()
+    </script>
+</body>
+</html>
