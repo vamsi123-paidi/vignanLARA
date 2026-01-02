@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            border: 2px solid black;
+            background-color: aqua;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="name"></div>
+    <script>
+        const fetchData = async()=>{
+            const name = document.getElementById("name")
+            const res =await fetch("https://jsonplaceholder.typicode.com/users/1")
+            const data =await res.json()
+            console.log(data)
+            console.log(data.name)
+            console.log(data.id)
+            console.log(data.address.geo.lat)
+
+            name.innerHTML = `
+                <p>${data.name}</p>
+                <p>${data.email}</p>
+            `
+        }
+        fetchData()
+    </script>
+</body>
+</html>

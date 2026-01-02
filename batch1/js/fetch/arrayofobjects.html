@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        #main{
+            background: darkolivegreen;
+            color: lightsteelblue;
+        }
+        .subDiv{
+            display: flex;
+            flex-wrap: wrap;
+            background: lightgoldenrodyellow;
+            color: darkolivegreen;
+            gap: 10px;
+        }
+        .flexContainer{
+            min-height: 100px;
+            min-width: 100px;
+            background: darkmagenta;
+            color: lightblue;
+            border: 2px solid lightblue;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="main"></div>
+    <script>
+      const fetchData = async () => {
+        const name = document.getElementById("name");
+        const res = await fetch("https://jsonplaceholder.typicode.com/users");
+        const data = await res.json();
+        console.log(data);
+        console.log(data[0].name);
+        const main = document.getElementById("main");
+        const subDiv = document.createElement("div");
+        subDiv.setAttribute("class", "subDiv");
+        data.map((user) => {
+          console.log(user);
+          subDiv.innerHTML += `
+                <div class="flexContainer"><p>${user.name}</p></div>
+                `;
+          main.appendChild(subDiv);
+        });
+      };
+      fetchData();
+    </script>
+  </body>
+</html>
