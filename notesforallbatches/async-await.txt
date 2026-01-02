@@ -1,0 +1,84 @@
+`async` / `await` in JavaScript:
+
+`async` and `await` are modern JavaScript features used to handle asynchronous operations*in a clean, readable way—especially when working with Promises.
+
+What is `async`?
+
+The `async` keyword is added to a function to make it return a Promise*automatically.
+Even if the function returns a value, JavaScript wraps it in a Promise.
+
+async function greet() {
+  return "Hello";
+}
+
+greet().then(msg => console.log(msg)); // Output: Hello
+
+
+What is `await`?
+
+The `await` keyword can only be used inside an `async` function.
+It pauses the execution of the async function until the Promise is resolved, then resumes with the result.
+
+Basic Example:
+
+function fetchData() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve("Data fetched");
+    }, 2000);
+  });
+}
+
+async function getData() {
+  console.log("Start fetching...");
+  const result = await fetchData();
+  console.log(result); // Output after 2 sec: Data fetched
+  console.log("Done");
+}
+
+getData();
+
+Explanation:
+
+`fetchData` simulates a 2-second delay (like an API call).
+`await fetchData()` waits for the Promise to resolve before continuing.
+
+Example with Error Handling:
+
+function fetchUser() {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject("Failed to fetch user");
+    }, 1000);
+  });
+}
+
+async function getUser() {
+  try {
+    const user = await fetchUser();
+    console.log(user);
+  } catch (error) {
+    console.error("Error:", error); // Output: Error: Failed to fetch user
+  }
+}
+
+getUser();
+
+{
+  "name":"vamsi",
+  "age":25
+}
+
+
+Real-World Example with `fetch`:
+async function fetchMovie() {
+  try {
+    const response = await fetch("https://www.omdbapi.com/?t=Inception&apikey=your_api_key");
+    const data = await response.json();
+    console.log(data.Title); // Output: Inception
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+}
+
+fetchMovie();

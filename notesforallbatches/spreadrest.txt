@@ -1,0 +1,61 @@
+The spread operator and rest parameter look the same (`...`), but they are used in different contexts and serve different purposes in JavaScript.
+
+ 🔹 Spread Operator (`...`)
+
+The spread operator is used to unpack elements from arrays or objects.
+
+ ✅ Use Cases
+
+1. Copying arrays
+2. Merging arrays or objects
+3. Passing array elements as individual arguments
+
+ 🔸 Examples:
+
+// Example 1: Copying an array
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1];  // [1, 2, 3]
+const arr2[2]=10
+
+// Example 2: Merging arrays
+const arr3 = [4, 5];
+const merged = [...arr1, ...arr3];  // [1, 2, 3, 4, 5]
+
+// Example 3: Passing elements to a function
+function add(a, b, c) {
+  return a + b + c;
+}
+
+const numbers = [1, 2, 3];
+console.log(add(...numbers));  // 6
+
+// Example 4: Copying and modifying objects
+const user = { name: "Alice", age: 25 };
+const updatedUser = { ...user, age: 26 };  // { name: "Alice", age: 26 }
+
+ 🔹 Rest Operator (`...`)
+
+The rest parameter is used to collect multiple values into an array. It is used in function parameters or destructuring.
+ 
+ ✅ Use Cases
+
+1. Functions with variable number of parameters
+2. Destructuring objects or arrays
+
+ 🔸 Examples:
+
+// Example 1: Function parameters
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sum(1, 2, 3, 4));  // 10
+
+// Example 2: Array destructuring
+const [first,second, ...rest] = [10, 20, 30, 40];
+// first = 10, rest = [30, 40]
+
+// Example 3: Object destructuring
+const person = { name: "Bob", age: 30, city: "Paris" };
+const { name, ...otherDetails } = person;
+// name = "Bob", otherDetails = { age: 30, city: "Paris" }
+

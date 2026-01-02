@@ -1,0 +1,86 @@
+🔹 Shallow Copy
+
+ ✅ Definition:
+
+A shallow copy copies only the top-level values. If the object has nested objects or arrays, the nested references are still shared.
+
+let person = {
+  name : "bob",
+  age:30,
+  address:{
+    d.no : 2-120/1,
+    state:"punjab"
+  }
+}
+
+ 🔸 Example:
+ 
+const original = {
+  name: "Alice",
+  details: {
+    age: 25
+  }
+};
+
+const shallowCopy = { ...original };
+
+// Modify nested object
+shallowCopy.details.age = 30;
+
+console.log(original.details.age); // 🔴 30 — original is affected!
+
+ ✅ Why?
+
+Because `details` is an object, and both `original` and `shallowCopy` point to the same nested object in memory.
+
+
+## 🔹 Deep Copy
+
+ ✅ Definition:
+
+A deep copy copies all levels of the object or array. No references are shared—everything is fully cloned.
+
+ 🔸 Example 1: Using `structuredClone()` (✅ Modern JS)
+
+const original = {
+  name: "Alice",
+  details: {
+    age: 25
+  }
+};
+
+const deepCopy = structuredClone(original);
+
+deepCopy.details.age = 30;
+
+console.log(original.details.age); // ✅ 25 — original is NOT affected
+
+ 🔸 Example 2: Using `JSON.parse(JSON.stringify())` (⚠️ Limited)
+
+const original = {
+  name: "Alice",
+  details: {
+    age: 25
+  }
+};
+
+const deepCopy = JSON.parse(JSON.stringify(original));
+
+deepCopy.details.age = 30;
+
+console.log(original.details.age); // ✅ 25
+```
+
+> ⚠️ Note: JSON method doesn't support functions, `undefined`, `Date`, `Map`, `Set`, etc.
+
+---
+
+## ✨ Summary:
+
+| Feature            | Shallow Copy                        | Deep Copy                                           |
+| ------------------ | ----------------------------------- | --------------------------------------------------- |
+| Top-level      | Copied                              | Copied                                              |
+| Nested         | Referenced (shared memory)          | Fully cloned (independent copy)                     |
+| Common methods | `Object.assign()`, spread (`{...}`) | `structuredClone()`, `JSON.parse(JSON.stringify())` |
+| Best for       | Simple objects                      | Complex/nested objects                              |
+
