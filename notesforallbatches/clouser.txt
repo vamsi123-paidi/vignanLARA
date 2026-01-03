@@ -1,0 +1,51 @@
+What is a Closure?
+A closure is created when a function "remembers" its lexical scope, even when that function is executed outside of its original scope.
+
+Put simply:
+
+A function inside another function can still access the outer function's variables, even after the outer function has finished running.
+
+Closures in JavaScript are extremely powerful and widely used. Here are some  practical use cases of closures along with explanations:
+
+
+function outer() {
+  let count = 0;//hoisted at here
+  return function inner() {
+    count++;
+    console.log(count);
+  };
+}
+
+const counter = outer();
+counter(); // 1
+counter(); // 2
+
+Real-World Use Cases of Closures
+ Data Privacy / Encapsulation
+You can hide variables from the global scope.
+
+function secretHolder() {
+  let secret = "hidden";
+  return {
+    getSecret: () => secret,
+    setSecret: (val) => { secret = val; }
+  };
+}
+
+const x = secretHolder();
+console.log(x.getSecret()); // "hidden"
+x.setSecret("new secret");
+console.log(x.getSecret()); // "new secret"
+
+2. Creating Private Counters
+
+function createCounter() {
+  let count = 0;
+  return function () {
+    return ++count;
+  };
+}
+
+const counterA = createCounter();
+console.log(counterA()); // 1
+console.log(counterA()); // 2

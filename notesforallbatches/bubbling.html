@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event Bubbling Example</title>
+</head>
+<body>
+
+  <div id="outer" style="padding:30px; background-color:lightblue;">
+    Outer Div
+    <div id="middle" style="padding:20px; background-color:lightgreen;">
+      Middle Div
+      <div id="inner" style="padding:10px; background-color:lightcoral;">
+        Inner Div (Click Me)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('outer').addEventListener('click', () => {
+      alert('Outer Div clicked!');
+    });
+
+    document.getElementById('middle').addEventListener('click', () => {
+      alert('Middle Div clicked!');
+    });
+
+    document.getElementById('inner').addEventListener('click', (event) => {
+      alert('Inner Div clicked!');
+    });
+  </script>
+
+</body>
+</html>
+
+<!-- JavaScript Event Bubbling – Explained with Example
+Event bubbling is a concept where an event starts from the deepest target element (the one actually clicked) and bubbles up through its parent elements, triggering any handlers along the way. -->

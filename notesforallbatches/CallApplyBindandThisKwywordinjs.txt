@@ -1,0 +1,26 @@
+Call,Apply,Bind methods 
+
+these methods are used to change the context of this keyword in the function 
+
+this keyword is refer to the global objects means window object in the case of browser.
+
+this keyword in objects :
+it refer to the current object which is being used or called in the method 
+
+this keyword in function(standalone function) :
+it refers to the global object.
+
+
+statements 
+console.log(this,"console statement")
+
+let person = {
+    name:"adam",
+    age:30,
+    greet:function (){
+        console.log(this,"this is method")
+    }
+}
+
+person.greet()
+

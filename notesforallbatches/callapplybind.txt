@@ -1,0 +1,25 @@
+call,apply,bind methods in js and this keyword in js 
+
+==> these methods are used to change the context of this keyword inside the function
+
+==>this keyword refers to the global object that is window object
+
+when we are using this keyword in the functions where it is going to refer?
+it refers to the current object it is used or called in the method
+
+when it comes to the function(stand alone function) this keyword refer to the global object
+
+use strict mode in js
+
+uses 1)it doesn't allows to use the undecleared variables
+2)it doesn't allows to use the duplicate parameters in the functions 
+3)it changes the behavior of this keyword in the normal function 
+
+call() method
+The call() method calls a function immediately with a specified this value and arguments provided individually.
+
+apply() method 
+The apply() method calls a function immediately with a specified this value, and arguments provided as an array (or array-like object).
+
+bind() method 
+The bind() method creates and returns a new function with the this value permanently set to the specified value, without calling the function immediately.

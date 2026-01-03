@@ -144,7 +144,51 @@
 // console.log(res)
 // console.log(res.name)
 
+// let obj = {
+//     name:"person",
+//     greet:function(){
+//         console.log(this.name)
+//     }
+// }
+// obj.greet()
 
+// const a = [1,2,3]
+// const b =[4,5,6,7]
+// const c = [...a,...b]
+// console.log(c)
+
+// function add(a,b,c){
+//     out = a+b+c
+//     console.log(out)
+// }
+// const arr = [1,2,3]
+// add(...arr)
+
+// const a = [1,2,3,4]
+
+
+// const [adam,second,...rest] = a 
+// console.log(adam)
+// console.log(second)
+// console.log(rest)
+
+
+const person = {
+    name:"adam",
+    age:25
+}
+
+const {name,...other} = person
+console.log(name)
+console.log(other)
+
+function add(...numbers){
+    console.log(numbers)
+    const out = numbers.reduce((acc,curr)=>acc+curr,0)
+    console.log(out)
+}
+
+add(1,2,3)
 
 
 
