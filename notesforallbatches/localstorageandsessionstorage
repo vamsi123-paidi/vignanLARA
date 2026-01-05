@@ -1,0 +1,198 @@
+Local Storage & Session Storage in JavaScript
+
+
+1️⃣ What is Web Storage?
+
+Web Storage allows the browser to store data in key–value pairs.
+
+There are two types:
+
+1. localStorage
+2. sessionStorage
+
+Both store data in the browser, without a database.
+
+
+2️⃣ localStorage
+
+ What is localStorage?
+
+* Stores data permanently
+* Data does NOT get deleted even after:
+
+  * Browser close
+  * Tab close
+  * System restart
+
+👉 Data stays until manually cleared.
+
+
+ When to Use localStorage?
+
+Theme preference (dark/light)
+User settings
+Login remember me
+Cart data
+Language selection
+
+
+Basic localStorage Syntax
+
+localStorage.setItem(key, value)
+localStorage.getItem(key)
+localStorage.removeItem(key)
+localStorage.clear()
+
+⚠️ Important:
+localStorage stores ONLY STRINGS
+
+
+Example 1: Store Data in localStorage
+
+localStorage.setItem("username", "Vamsi");
+
+
+Example 2: Get Data from localStorage
+
+let name = localStorage.getItem("username");
+console.log(name);
+
+Output:
+
+Vamsi
+
+
+Example 3: Remove One Item
+
+localStorage.removeItem("username");
+
+
+Example 4: Clear All localStorage Data
+
+localStorage.clear();
+
+
+Example 5: Store Object in localStorage (IMPORTANT)
+
+ Problem
+
+localStorage cannot store objects directly.
+
+ Solution
+
+Convert object to JSON string.
+
+const user = {
+    name: "Vamsi",
+    age: 23,
+    role: "Developer"
+};
+
+localStorage.setItem("userData", JSON.stringify(user));
+
+
+ Get Object Back
+
+const data = JSON.parse(localStorage.getItem("userData"));
+console.log(data.name);
+
+
+3️⃣ sessionStorage
+
+ What is sessionStorage?
+
+* Stores data temporarily
+* Data is deleted when:
+
+  * Browser tab is closed
+  * Session ends
+
+👉 Works only for one tab
+
+
+ When to Use sessionStorage?
+
+OTP verification
+Temporary form data
+Step-by-step form progress
+One-time session info
+
+
+sessionStorage Syntax
+
+sessionStorage.setItem(key, value)
+sessionStorage.getItem(key)
+sessionStorage.removeItem(key)
+sessionStorage.clear()
+
+
+Example 1: Store Data in sessionStorage
+
+sessionStorage.setItem("sessionUser", "Vamsi");
+
+
+Example 2: Get Data from sessionStorage
+
+let user = sessionStorage.getItem("sessionUser");
+console.log(user);
+
+
+Example 3: Remove One Item
+
+sessionStorage.removeItem("sessionUser");
+
+
+Example 4: Clear sessionStorage
+
+sessionStorage.clear();
+
+
+Example 5: Store Object in sessionStorage
+
+const cart = {
+    product: "Laptop",
+    price: 50000
+};
+
+sessionStorage.setItem("cartData", JSON.stringify(cart));
+
+
+ Get Object Back
+
+const cartData = JSON.parse(sessionStorage.getItem("cartData"));
+console.log(cartData.product);
+
+
+4️⃣ Real-Time Button Example (Local Storage)
+
+ Scenario
+
+* Button click count stored permanently
+
+let count = localStorage.getItem("count") || 0;
+count = Number(count);
+
+button.addEventListener("click", () => {
+    count++;
+    localStorage.setItem("count", count);
+    console.log("Clicked:", count);
+});
+
+👉 Refresh page → count remains.
+
+
+5️⃣ Key Differences (VERY IMPORTANT)
+
+localStorage        vs        sessionStorage
+Permanent           Temporary
+No expiry           Ends when tab closes
+Shared across tabs  Tab-specific
+Large storage       Same size
+
+
+6️⃣ Interview One-Liners
+
+localStorage stores data permanently in the browser.
+sessionStorage stores data only for the current session.
+
+Both store data as key-value pairs and only support strings.

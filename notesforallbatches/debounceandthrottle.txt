@@ -1,0 +1,190 @@
+Debouncing in JavaScript
+What is Debouncing?
+
+Debouncing means:
+👉 Execute a function only after a certain delay once the user stops triggering the event.
+
+If the button is clicked multiple times quickly, the function runs only once after the delay.
+
+Requirement
+
+1. Show "Button Pressed: X" → increases on every click
+2. Show "Triggered: Y" → increases only after 800ms debounce
+
+UI Text (for understanding)
+
+
+Button Pressed: 0
+Triggered: 0
+
+JavaScript Code (Debounce without Lodash)
+
+let pressedCount = 0;
+let triggeredCount = 0;
+
+const button = document.getElementById("btn");
+const pressedText = document.getElementById("pressed");
+const triggeredText = document.getElementById("triggered");
+
+function debounce(func, delay) {
+    let timer;
+    return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func();
+        }, delay);
+    };
+}
+
+const debouncedFunction = debounce(() => {
+    triggeredCount++;
+    triggeredText.innerText = "Triggered: " + triggeredCount;
+}, 800);
+
+button.addEventListener("click", () => {
+    pressedCount++;
+    pressedText.innerText = "Button Pressed: " + pressedCount;
+    debouncedFunction();
+});
+
+
+
+
+How It Works (Explain to Students)
+
+1. Every time the button is clicked
+   → Button Pressed count increases
+
+2. The debounce function:
+
+    Clears the previous timer
+    Starts a new 800ms timer
+
+3. If clicks keep happening
+   → Function does NOT run
+
+4. When user stops clicking for 800ms
+   → Triggered count increases by 1
+
+
+
+Example Output Scenario
+
+
+User clicks button 7 times quickly
+
+
+
+Button Pressed: 7
+Triggered: 1   (after 800ms)
+
+
+
+
+Key One-Line Definition (Very Important)
+
+
+Debounce executes the function only after the event stops for a given delay.
+
+
+Throttling in JavaScript (Button Example)
+
+
+What is Throttling?
+
+Throttling means:
+👉 Execute a function at most once in a fixed time interval, no matter how many times the event occurs.
+
+If the button is clicked continuously, the function runs only once every 800ms.
+
+
+Requirement
+
+1. Show "Button Pressed: X" → increases on every click
+2. Show "Triggered: Y" → increases once every 800ms
+
+
+UI Text (for understanding)
+
+
+Button Pressed: 0
+Triggered: 0
+
+
+
+JavaScript Code (Throttle without Lodash)
+
+
+let pressedCount = 0;
+let triggeredCount = 0;
+
+const button = document.getElementById("btn");
+const pressedText = document.getElementById("pressed");
+const triggeredText = document.getElementById("triggered");
+
+function throttle(func, delay) {
+    let lastTime = 0;
+    return function () {
+        const currentTime = Date.now();
+        if (currentTime - lastTime >= delay) {
+            lastTime = currentTime;
+            func();
+        }
+    };
+}
+
+const throttledFunction = throttle(() => {
+    triggeredCount++;
+    triggeredText.innerText = "Triggered: " + triggeredCount;
+}, 800);
+
+button.addEventListener("click", () => {
+    pressedCount++;
+    pressedText.innerText = "Button Pressed: " + pressedCount;
+    throttledFunction();
+});
+
+
+
+How It Works
+
+1. Every button click
+   → Button Pressed count increases
+
+2. Throttle checks:
+
+    Has 800ms passed since last execution?
+
+3. If YES
+   → Function executes
+   → Triggered count increases
+
+4. If NO
+   → Function is ignored
+
+
+Example Output Scenario
+
+
+User clicks button 10 times continuously
+
+
+
+Button Pressed: 10
+Triggered: 3   (runs once every 800ms)
+
+
+
+One-Line Definition (Important)
+
+
+Throttle executes a function at regular intervals while the event is firing.
+
+
+
+Final Difference
+
+
+Debounce → Wait → Then Execute
+Throttle → Execute → Then Wait
+
