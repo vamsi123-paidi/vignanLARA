@@ -1,0 +1,33 @@
+const weatherDiv = document.getElementById("weather");
+
+async function getWeather() {
+    const city = document.getElementById("city").value.trim();
+
+    if (city === "") {
+        weatherDiv.textContent = "Please enter a city name";
+        return;
+    }
+
+    const apiKey = "YOUR_API_KEY";
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    try {
+        weatherDiv.textContent = "Loading...";
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("City not found");
+        }
+
+        const data = await response.json();
+
+        weatherDiv.innerHTML = `
+            <h3>${data.name}</h3>
+            <p>Temperature: ${data.main.temp} °C</p>
+            <p>Weather: ${data.weather[0].description}</p>
+        `;
+    } catch (error) {
+        weatherDiv.textContent = error.message;
+    }
+}
