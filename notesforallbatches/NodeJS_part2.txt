@@ -1,0 +1,267 @@
+Node.js - Part 2
+
+🟢 Step 3: HTTP Server Creation in Node.js
+
+✅ What is an HTTP server?
+An HTTP server handles requests from clients (like web browsers) and sends back responses.
+
+✅ Why this server?
+
+Teaches how the backend communicates with the frontend.
+Builds a foundation to develop web applications and APIs.
+
+✅ Basic HTTP Server Example:
+
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.end('Hello from Node.js server!');
+});
+
+server.listen(3000, () => {
+  console.log('Server is running at http://localhost:3000/');
+});
+
+🟢 Step 4: Node.js Modules and Their Types
+
+✅ What are modules?
+Modules are reusable blocks of code.
+
+✅ Types of Modules:
+
+1. Core Modules - built into Node.js (e.g., `fs`, `http`)
+2. Local Modules - your own custom files
+3. Third-party Modules - installed via npm (e.g., `express`)
+
+✅ Examples:
+
+Core Module Example:
+
+const os = require('os');
+console.log('OS Platform:', os.platform());
+
+Local Module Example:
+
+`math.js`:
+
+function add(a, b) {
+  return a + b;
+}
+module.exports = add;
+
+`app.js`:
+
+const add = require('./math');
+console.log(add(5, 3)); // Output: 8
+
+* Third-party Module Example:
+
+npm install moment
+
+const moment = require('moment');
+console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+
+
+
+1. Get Current Date and Time
+
+js
+moment().format();
+
+
+🧾 Output: `"2025-05-22T14:30:00+05:30"`
+
+
+2. Format a Date
+
+js
+moment().format('MMMM Do YYYY, h:mm:ss a');
+
+
+🧾 Output: `"May 22nd 2025, 2:30:00 pm"`
+
+
+3. Parse a Date String
+
+js
+moment("2025-12-25", "YYYY-MM-DD").format("MMM Do");
+
+
+🧾 Output: `"Dec 25th"`
+
+
+4. Add Time
+
+js
+moment().add(7, 'days').format('YYYY-MM-DD');
+
+
+🧾 Output: `"2025-05-29"`
+
+
+5. Subtract Time
+
+js
+moment().subtract(2, 'months').format('YYYY-MM-DD');
+
+
+🧾 Output: `"2025-03-22"`
+
+
+6. Date Difference (in Days)
+
+js
+moment("2025-05-22").diff(moment("2025-01-01"), 'days');
+
+
+🧾 Output: `141`
+
+
+7. Check if One Date is Before Another
+
+js
+moment("2025-01-01").isBefore("2025-05-22");
+
+
+🧾 Output: `true`
+
+
+8. Check if One Date is After Another
+
+js
+moment("2025-06-01").isAfter("2025-05-22");
+
+
+🧾 Output: `true`
+
+
+9. Relative Time (Past)
+
+js
+moment("2025-01-01").fromNow();
+
+
+🧾 Output: `"5 months ago"`
+
+
+10. Relative Time (Future)
+
+js
+moment().add(10, 'days').fromNow();
+
+
+🧾 Output: `"in 10 days"`
+
+
+11. Start of a Time Unit
+
+js
+moment().startOf('month').format();
+
+
+🧾 Output: `"2025-05-01T00:00:00+05:30"`
+
+
+12. End of a Time Unit
+
+js
+moment().endOf('year').format();
+
+
+🧾 Output: `"2025-12-31T23:59:59+05:30"`
+
+
+13. Set Locale (e.g., French)
+
+js
+moment.locale('fr');
+
+
+🧾 Output: *(Changes moment output language to French)*
+
+
+14. Format with Locale
+
+js
+moment().format('LLLL');
+
+
+🧾 Output: `"jeudi 22 mai 2025 14:30"`
+
+
+🟢 Step 5: File Operations (CRUD)
+
+✅ Why file operations?
+Teaches students to store, read, update, and delete data using the filesystem.
+
+✅ Examples using `fs` module:
+
+* Create/Write File:
+
+const fs = require('fs');
+fs.writeFileSync('students.txt', 'Hello Students!');
+
+* Read File:
+
+const content = fs.readFileSync('students.txt', 'utf8');
+console.log(content);
+
+* Update File:
+
+fs.appendFileSync('students.txt', '\\nWelcome to Node.js');
+
+* Delete File:
+
+fs.unlinkSync('students.txt');
+
+🟢 Step 6: NodeMailer – Sending Emails in Node.js
+
+✅ Why this NodeMailer?
+
+* Real-world feature for sending emails (e.g., verifications, updates).
+* Shows integration of Node.js with external services.
+
+✅ Setup:
+
+1. Enable 2-Step Verification on your Gmail.
+2. Create an App Password in Google account settings.
+3. Use that app password in the code (not your Gmail password).
+
+✅ Install NodeMailer:
+
+ash
+npm install nodemailer
+
+✅ Complete Real-Time Example:
+
+const nodemailer = require('nodemailer');
+// Setup transporter
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'your_email@gmail.com',
+    pass: 'your_app_password' // Use Gmail App Password
+  }
+});
+
+// Email options
+let mailOptions = {
+  from: 'your_email@gmail.com',
+  to: 'student@example.com',
+  subject: 'Node.js Email Example',
+  text: 'Hello! This is a test email from Node.js'
+};
+
+// Send email
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    return console.log('Error:', error);
+  }
+  console.log('Email sent:', info.response);
+});
+
+✅ Notes:
+
+* NEVER hardcode real credentials.
+* Use `.env` or environment variables in production.
+
