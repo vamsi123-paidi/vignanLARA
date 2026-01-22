@@ -5,7 +5,7 @@ const Text = () => {
   return (
     <div>
         <input type="text"  placeholder='write to show down' onInput={(e)=>setText(e.target.value)}/>
-        {text}
+        <button>show text</button>
     </div>
   )
 }
