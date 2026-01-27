@@ -7,6 +7,13 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import UserProfile from './pages/UserProfile';
+import Dahboard from './pages/Dahboard';
+import Profile from './components/Profile';
+import Settings from './components/Settings';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminDashboard from './pages/AdminDashboard';
+import Login from './pages/Login';
+import PageNotFound from './pages/PageNotFound';
 
 
 
@@ -21,6 +28,20 @@ const App = () => {
           <Route path='/about' element={<About/>} />
           <Route path='/projects' element={<Projects/>}/>
           <Route path='/user/:userId' element={<UserProfile/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/dashboard' element={<Dahboard/>}>
+            <Route path='profile' element={<Profile/>}/>
+            <Route path='settings' element={<Settings/>}/>
+          </Route>
+
+          <Route path='/admin' element={
+            <ProtectedRoute>
+              <AdminDashboard/>
+            </ProtectedRoute>
+          } />
+
+
+          <Route path='*' element={<PageNotFound/>}/>
         </Routes>
         <Footer/>
       </Router>
