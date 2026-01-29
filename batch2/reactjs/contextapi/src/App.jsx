@@ -1,10 +1,16 @@
 import React from 'react'
-import Navbar from './components/Navbar'
+import Counter from './components/ReducerFun'
+import UseMemoExample from './components/UseMemoExe'
+import UseCallbackExample from './components/UseCallbackExe'
+import CounterComponent from './components/CounterComponent'
 
 const App = () => {
   return (
     <div>
-      <Navbar/>
+      <Counter/>
+      <UseMemoExample/>
+      <UseCallbackExample/>
+      <CounterComponent/>
     </div>
   )
 }
