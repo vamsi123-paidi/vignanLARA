@@ -1,0 +1,294 @@
+1. DATA MODELING
+
+
+
+Data modeling is about how you structure documents based on access patterns.
+
+
+
+ 1.1 Embedded Documents Approach
+
+ Use when:
+
+ 1 : 1 or 1 : few relationships
+ Data is read together frequently
+ Atomic updates are critical
+
+
+
+ Example: Embedded Documents
+
+
+db.users.insertOne({
+  _id: "user101",
+  name: "John Doe",
+  address: {
+    street: "123 Main St",
+    city: "New York",
+    zip: "10001"
+  },
+  contacts: [
+    { type: "mobile", number: "555-0101" },
+    { type: "email", address: "john@example.com" }
+  ]
+});
+ Output
+
+
+{
+  acknowledged: true,
+  insertedId: "user101"
+}
+ Explanation
+
+ `address` is embedded → accessed with user
+ `contacts` array grows only slightly
+ One document read = full user data
+ Atomic updates possible on entire document
+
+
+
+ 1.2 Referenced Documents Approach
+
+ Use when:
+
+ 1 : many or many : many relationships
+ Data grows without bound
+ Independent access required
+
+
+
+ Example: Referenced Collections
+
+ Authors Collection
+
+
+db.authors.insertOne({
+  _id: "auth202",
+  name: "Jane Smith",
+  specialty: "Database Systems"
+});
+ Output
+
+
+{
+  acknowledged: true,
+  insertedId: "auth202"
+}
+
+
+ Books Collection
+
+
+db.books.insertMany([
+  {
+    _id: "book305",
+    title: "MongoDB Essentials",
+    author_id: "auth202"
+  },
+  {
+    _id: "book306",
+    title: "Advanced MongoDB",
+    author_id: "auth203"
+  }
+]);
+ Output
+
+
+{
+  acknowledged: true,
+  insertedIds: {
+    "0": "book305",
+    "1": "book306"
+  }
+}
+ Explanation
+
+ Books and authors stored separately
+ Avoids document growth problem
+ Allows independent updates
+
+
+
+ 1.3 Hybrid Approach with `$lookup`
+
+ Join Books with Authors
+
+
+db.books.aggregate([
+  {
+    $lookup: {
+      from: "authors",
+      localField: "author_id",
+      foreignField: "_id",
+      as: "author_details"
+    }
+  },
+  {
+    $unwind: "$author_details"
+  },
+  {
+    $project: {
+      title: 1,
+      "author_details.name": 1
+    }
+  }
+]);
+ Output
+
+
+[
+  {
+    _id: "book305",
+    title: "MongoDB Essentials",
+    author_details: { name: "Jane Smith" }
+  }
+]
+ Explanation
+
+ `$lookup` performs join
+ `$unwind` converts array to object
+ `$project` selects required fields
+
+
+
+ 2. SCHEMA VALIDATION
+
+
+
+Schema validation enforces data integrity at database level.
+
+
+
+ 2.1 Basic Schema Validation
+
+
+db.createCollection("employees", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["employee_id", "full_name", "department", "salary"],
+      properties: {
+        employee_id: {
+          bsonType: "string",
+          pattern: "^EMP-[0-9]{5}$",
+          description: "Must be in format EMP-12345"
+        },
+        full_name: {
+          bsonType: "string",
+          minLength: 3,
+          maxLength: 25
+        },
+        department: {
+          enum: ["Engineering", "HR", "Finance", "Marketing"]
+        },
+        salary: {
+          bsonType: "number",
+          minimum: 30000,
+          maximum: 500000
+        }
+      }
+    }
+  }
+});
+
+
+ ❌ Invalid Insert
+
+
+db.employees.insertOne({
+  employee_id: "12345",
+  full_name: "Al",
+  department: "Sales",
+  salary: 10000
+});
+ Output
+
+t
+MongoServerError: Document failed validation
+
+
+ ✅ Valid Insert
+
+
+db.employees.insertOne({
+  employee_id: "EMP-12345",
+  full_name: "Ali",
+  department: "HR",
+  salary: 50000
+});
+ Output
+
+
+{
+  acknowledged: true,
+  insertedId: ObjectId("...")
+}
+
+
+ 2.2 Complex Conditional Validation
+
+
+db.createCollection("orders", {
+  validator: {
+    $expr: {
+      $and: [
+        { $gte: ["$order_date", "$created_at"] },
+        {
+          $or: [
+            { $eq: ["$status", "pending"] },
+            {
+              $and: [
+                { $ne: ["$status", "pending"] },
+                { $gt: ["$processed_at", "$created_at"] }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+});
+
+
+ ✅ Valid Insert (Processed Order)
+
+
+db.orders.insertOne({
+  order_date: new Date("2023-10-05"),
+  created_at: new Date("2023-10-01"),
+  status: "shipped",
+  processed_at: new Date("2023-10-03")
+});
+
+
+ ✅ Valid Insert (Pending Order)
+
+
+db.orders.insertOne({
+  order_date: new Date("2023-10-02"),
+  created_at: new Date("2023-10-01"),
+  status: "pending"
+});
+
+
+ ❌ Invalid Insert (Date Violation)
+
+
+db.orders.insertOne({
+  order_date: new Date("2023-09-30"),
+  created_at: new Date("2023-10-01"),
+  status: "pending"
+});
+
+
+ ❌ Invalid Insert (Processed Date Error)
+
+
+db.orders.insertOne({
+  order_date: new Date("2023-10-03"),
+  created_at: new Date("2023-10-01"),
+  status: "shipped",
+  processed_at: new Date("2023-09-30")
+});
+

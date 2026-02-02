@@ -1,0 +1,445 @@
+🔥 MongoDB INDEXING 
+🔹 BASE DATA (CONFIRM)
+
+
+db.orders.find()
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, customer: "A", amount: 120, city: "Hyderabad", items: ["pen", "book"] },
+  { _id: 2, customer: "B", amount: 80, city: "Bangalore", items: ["pencil"] },
+  { _id: 3, customer: "A", amount: 200, city: "Hyderabad", items: ["book", "eraser"] },
+  { _id: 4, customer: "C", amount: 300, city: "Chennai", items: ["bag"] }
+]
+
+
+
+
+ 1️⃣ SINGLE FIELD INDEX
+
+ ✅ Code
+
+
+db.orders.createIndex({ customer: 1 })
+
+
+ ✅ Output (Shell)
+
+
+customer_1
+
+
+
+
+ 🔹 Query Using Index
+
+
+db.orders.find({ customer: "A" })
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, customer: "A", amount: 120, city: "Hyderabad" },
+  { _id: 3, customer: "A", amount: 200, city: "Hyderabad" }
+]
+
+
+
+
+ 🔹 Explain Output
+
+
+db.orders.find({ customer: "A" }).explain("executionStats")
+
+
+ OUTPUT (Simplified)
+
+
+{
+  "stage": "IXSCAN",
+  "indexName": "customer_1",
+  "totalDocsExamined": 2
+}
+
+
+
+
+ 🧠 Explanation
+
+* MongoDB uses `customer_1` index
+* No full collection scan
+* Faster lookup
+
+
+
+ 2️⃣ COMPOUND INDEX
+
+ ✅ Code
+
+
+db.orders.createIndex({ customer: 1, amount: -1 })
+
+
+ ✅ Output
+
+
+customer_1_amount_-1
+
+
+
+
+ 🔹 Query + Sort
+
+
+db.orders.find({ customer: "A" }).sort({ amount: -1 })
+
+
+ OUTPUT
+
+
+[
+  { _id: 3, customer: "A", amount: 200 },
+  { _id: 1, customer: "A", amount: 120 }
+]
+
+
+
+
+ 🔹 Explain
+
+
+db.orders.find({ customer: "A" }).sort({ amount: -1 }).explain("executionStats")
+
+
+ OUTPUT
+
+
+{
+  "stage": "IXSCAN",
+  "indexName": "customer_1_amount_-1"
+}
+
+
+
+
+ 3️⃣ MULTIKEY INDEX (ARRAY)
+
+ ✅ Code
+
+
+db.orders.createIndex({ items: 1 })
+
+
+ ✅ Output
+
+
+items_1
+
+
+
+
+ 🔹 Query
+
+
+db.orders.find({ items: "book" })
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, items: ["pen", "book"] },
+  { _id: 3, items: ["book", "eraser"] }
+]
+
+
+
+
+ 4️⃣ TEXT INDEX
+
+ ✅ Code
+
+
+db.orders.createIndex({ items: "text" })
+
+
+ ✅ Output
+
+
+items_text
+
+
+
+
+ 🔹 Query
+
+
+db.orders.find({ $text: { $search: "book" } })
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, items: ["pen", "book"] },
+  { _id: 3, items: ["book", "eraser"] }
+]
+
+
+
+
+ 5️⃣ HASHED INDEX
+
+ ✅ Code
+
+
+db.orders.createIndex({ customer: "hashed" })
+
+
+ ✅ Output
+
+
+customer_hashed
+
+
+
+
+ 🔹 Query
+
+
+db.orders.find({ customer: "A" })
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, customer: "A" },
+  { _id: 3, customer: "A" }
+]
+
+
+
+
+ 🔹 Explain
+
+
+db.orders.find({ customer: "A" }).explain()
+
+
+ OUTPUT
+
+
+{
+  "indexName": "customer_hashed",
+  "stage": "IXSCAN"
+}
+
+
+
+
+ 6️⃣ GEO-SPATIAL INDEX
+
+ ✅ Insert
+
+
+db.places.insertOne({
+  name: "Park",
+  location: {
+    type: "Point",
+    coordinates: [78.4867, 17.3850]
+  }
+})
+
+
+db.places.deleteOne({name:"Park"})
+
+
+
+
+ ✅ Code
+
+
+db.places.createIndex({ location: "2dsphere" })
+
+
+ ✅ Output
+
+
+location_2dsphere
+
+
+
+
+ 🔹 Query
+
+
+db.places.find({
+  location: {
+    $near: {
+      $geometry: {
+        type: "Point",
+        coordinates: [78.4867, 17.3850]
+      },
+      $maxDistance: 5000
+    }
+  }
+})
+
+
+ OUTPUT
+
+
+[
+  {
+    name: "Park",
+    location: {
+      type: "Point",
+      coordinates: [78.4867, 17.3850]
+    }
+  }
+]
+
+
+
+
+ 7️⃣ PARTIAL INDEX
+
+ ✅ Code
+
+
+db.orders.createIndex(
+  { customer: 1 },
+  { partialFilterExpression: { amount: { $gt: 100 } } }
+)
+
+
+ ✅ Output
+
+
+customer_1
+
+
+
+
+ 🔹 Query
+
+
+db.orders.find({ customer: "A", amount: { $gt: 100 } })
+
+
+ OUTPUT
+
+
+[
+  { _id: 1, amount: 120 },
+  { _id: 3, amount: 200 }
+]
+
+
+
+
+ 8️⃣ TTL INDEX
+
+ ✅ Insert
+
+
+db.logs.insertOne({
+  message: "temp log",
+  createdAt: new Date()
+})
+
+
+
+
+ ✅ Code
+
+
+db.logs.createIndex(
+  { createdAt: 1 },
+  { expireAfterSeconds: 10 }
+)
+
+
+ ✅ Output
+
+
+createdAt_1
+
+
+
+
+ 🔹 After 1 Hour
+
+
+db.logs.find()
+
+
+ OUTPUT
+
+
+[]
+
+
+
+
+ 9️⃣ UNIQUE INDEX
+
+ ✅ Code
+
+
+db.users.createIndex(
+  { email: 1 },
+  { unique: true }
+)
+
+
+
+
+ 🔹 Insert Duplicate
+
+
+db.users.insertOne({ email: "test@gmail.com" })
+db.users.insertOne({ email: "test@gmail.com" })
+
+
+ OUTPUT (ERROR)
+
+
+E11000 duplicate key error collection
+
+
+
+
+ 🔟 CASE-INSENSITIVE INDEX
+
+ ✅ Code
+
+
+db.users.createIndex(
+  { name: 1 },
+  { collation: { locale: "en", strength: 2 } }
+)
+
+
+
+
+ 🔹 Query
+
+
+db.users.find(
+  { name: "alice" }
+).collation({ locale: "en", strength: 2 })
+
+
+ OUTPUT
+
+
+[
+  { name: "Alice" }
+]
