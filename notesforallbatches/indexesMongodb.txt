@@ -134,7 +134,6 @@ db.orders.find({ customer: "A" }).sort({ amount: -1 }).explain("executionStats")
 
 db.orders.createIndex({ items: 1 })
 
-
  ✅ Output
 
 

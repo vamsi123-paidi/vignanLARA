@@ -260,6 +260,7 @@ transporter.sendMail(mailOptions, (error, info) => {
   console.log('Email sent:', info.response);
 });
 
+
 ✅ Notes:
 
 * NEVER hardcode real credentials.
